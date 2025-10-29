@@ -1,17 +1,26 @@
 public class Main {
     public static void main(String[] args) {
-        PagamentoService service = new PagamentoService();
+    TwitterAPI twitterAPI = new TwitterAPI();
+    InstagramAPI instagramAPI = new InstagramAPI();
+    LinkedInAPI linkedInAPI = new LinkedInAPI();
+    TikTokAPI tikTokAPI = new TikTokAPI();
 
-        System.out.println("--- Pagamento via Cartão de Crédito ---");
-        service.processarPagamento(new FactoryCartaoCredito("1234567890123456"), 150.00); 
-        service.processarPagamento(new FactoryCartaoCredito("12345"), 50.00); // Exemplo de cartão inválido
+    ConectorMidiaSocial servicoTwitter = new TwitterAdapter(twitterAPI);
+    ConectorMidiaSocial servicoInstagram = new InstagramAdapter(instagramAPI);
+    ConectorMidiaSocial servicoLinkedIn = new LinkedInAdapter(linkedInAPI);
+    ConectorMidiaSocial servicoTikTok = new TiktokAdapter(tikTokAPI);
 
-        System.out.println("\n--- Pagamento via PayPal ---");
-        service.processarPagamento(new FactoryPayPal("usuario@exemplo.com"), 75.00);
-        service.processarPagamento(new FactoryPayPal("emailinvalido"), 25.00); // Exemplo de e-mail inválido
+    Postagem postagemTexto = new Postagem("Olá mundo! Este é meu post unificado.", null);
+    Postagem postagemComImagem = new Postagem("Que paisagem incrível!", "http://imagem.com/paisagem.jpg");
+    Postagem postagemVideo = new Postagem("Meu novo vídeo de dança!", "http://video.com/dancinha.mp4");
 
-        System.out.println("\n--- Pagamento via Criptomoeda ---");
-        service.processarPagamento(new FactoryCriptomoeda(500.00), 300.00);
-        service.processarPagamento(new FactoryCriptomoeda(100.00), 300.00); // Exemplo de saldo insuficiente
+    System.out.println("### INICIANDO PUBLICAÇÕES ###\n");
+
+    servicoTwitter.publicar(postagemTexto);
+    servicoInstagram.publicar(postagemComImagem);
+    servicoLinkedIn.publicar(postagemTexto);
+    servicoTikTok.publicar(postagemVideo);
+
+    System.out.println("\n### PUBLICAÇÕES FINALIZADAS ###");
     }
 }
